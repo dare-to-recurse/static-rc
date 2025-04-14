@@ -664,22 +664,22 @@ impl<'a, F: ?Sized + future::Future + marker::Unpin, const N: usize> future::Fut
 }
 
 #[cfg(feature = "nightly-generator-trait")]
-impl<'a, G: ?Sized + ops::Generator<R> + marker::Unpin, R, const N: usize> ops::Generator<R> for StaticRcRef<'a, G, N, N> {
-    type Yield = G::Yield;
-    type Return = G::Return;
+impl<'a, C: ?Sized + ops::Coroutine<R> + marker::Unpin, R, const N: usize> ops::Coroutine<R> for StaticRcRef<'a, C, N, N> {
+    type Yield = C::Yield;
+    type Return = C::Return;
 
-        fn resume(mut self: pin::Pin<&mut Self>, arg: R) -> ops::GeneratorState<Self::Yield, Self::Return> {
-            G::resume(pin::Pin::new(&mut *self), arg)
+        fn resume(mut self: pin::Pin<&mut Self>, arg: R) -> ops::CoroutineState<Self::Yield, Self::Return> {
+            C::resume(pin::Pin::new(&mut *self), arg)
         }
 }
 
 #[cfg(feature = "nightly-generator-trait")]
-impl<'a, G: ?Sized + ops::Generator<R>, R, const N: usize> ops::Generator<R> for pin::Pin<StaticRcRef<'a, G, N, N>> {
-    type Yield = G::Yield;
-    type Return = G::Return;
+impl<'a, C: ?Sized + ops::Coroutine<R>, R, const N: usize> ops::Coroutine<R> for pin::Pin<StaticRcRef<'a, C, N, N>> {
+    type Yield = C::Yield;
+    type Return = C::Return;
 
-        fn resume(mut self: pin::Pin<&mut Self>, arg: R) -> ops::GeneratorState<Self::Yield, Self::Return> {
-            G::resume((*self).as_mut(), arg)
+        fn resume(mut self: pin::Pin<&mut Self>, arg: R) -> ops::CoroutineState<Self::Yield, Self::Return> {
+            C::resume((*self).as_mut(), arg)
         }
 }
 

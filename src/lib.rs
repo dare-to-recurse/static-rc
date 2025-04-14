@@ -61,7 +61,7 @@
 #![cfg_attr(feature = "nightly-coerce-unsized", feature(coerce_unsized))]
 #![cfg_attr(feature = "nightly-dispatch-from-dyn", feature(dispatch_from_dyn))]
 #![cfg_attr(any(feature = "nightly-dispatch-from-dyn", feature = "nightly-coerce-unsized"), feature(unsize))]
-#![cfg_attr(feature = "nightly-generator-trait", feature(generator_trait))]
+#![cfg_attr(feature = "nightly-generator-trait", feature(coroutine_trait))]
 
 //  Lints
 #![deny(missing_docs)]
